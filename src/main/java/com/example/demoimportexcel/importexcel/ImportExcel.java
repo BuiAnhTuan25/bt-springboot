@@ -20,7 +20,7 @@ public class ImportExcel {
     @Autowired
     StudentService studentService;
 
-    public List<Student> ImportStudentFromExcel(MultipartFile files) throws IOException {
+        public List<Student> ImportStudentFromExcel(MultipartFile files) throws IOException {
         List<Student> students = new ArrayList<>();
 
         XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream());
@@ -31,34 +31,34 @@ public class ImportExcel {
                 XSSFRow row = worksheet.getRow(index);
                 Student student = new Student();
                 student.setId(Long.parseLong(getCellValue(row, 0,evaluator)));
-                student.setPrimary_school(getCellValue(row, 1,evaluator));
-                student.setDistrict(getCellValue(row, 2,evaluator));
-                student.setStudent_id(getCellValue(row, 3,evaluator).replaceAll(" ", "").replaceAll("/n", ""));
-                student.setClassroom(getCellValue(row, 4,evaluator));
-                student.setName(getCellValue(row, 5,evaluator));
+                student.setPrimary_school(getCellValue(row, 1));
+                student.setDistrict(getCellValue(row, 2));
+                student.setStudent_id(getCellValue(row, 3).replaceAll(" ", "").replaceAll("/n", ""));
+                student.setClassroom(getCellValue(row, 4));
+                student.setName(getCellValue(row, 5));
 
                 SimpleDateFormat DateFor = new SimpleDateFormat("yyyy/MM/dd");
-                String dateString = getCellValue(row, 8,evaluator) + "/" + getCellValue(row, 7,evaluator) + "/" + getCellValue(row, 6,evaluator);
+                String dateString = getCellValue(row, 8) + "/" + getCellValue(row, 7) + "/" + getCellValue(row, 6);
                 try {
                     Date date = DateFor.parse(dateString);
                     student.setBirthday(date);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-                student.setGender(getCellValue(row, 9,evaluator));
-                student.setBirthplace(getCellValue(row, 10,evaluator));
-                student.setEthnic(getCellValue(row, 11,evaluator));
-                student.setAddress(getCellValue(row, 12,evaluator));
-                student.setPhone_number(getCellValue(row, 13,evaluator));
-                student.setPoint1(!getCellValue(row, 14,evaluator).isEmpty() ? Integer.parseInt(getCellValue(row, 14,evaluator)) : 0);
-                student.setPoint2(!getCellValue(row, 15,evaluator).isEmpty() ? Integer.parseInt(getCellValue(row, 15,evaluator)) : 0);
-                student.setPoint3(!getCellValue(row, 16,evaluator).isEmpty() ? Integer.parseInt(getCellValue(row, 16,evaluator)) : 0);
-                student.setPoint4(!getCellValue(row, 17,evaluator).isEmpty() ? Integer.parseInt(getCellValue(row, 17,evaluator)) : 0);
-                student.setPoint5(!getCellValue(row, 18,evaluator).isEmpty() ? Integer.parseInt(getCellValue(row, 18,evaluator)) : 0);
+                student.setGender(getCellValue(row, 9));
+                student.setBirthplace(getCellValue(row, 10));
+                student.setEthnic(getCellValue(row, 11));
+                student.setAddress(getCellValue(row, 12));
+                student.setPhone_number(getCellValue(row, 13));
+                student.setPoint1(!getCellValue(row, 14).isEmpty() ? Integer.parseInt(getCellValue(row, 14)) : 0);
+                student.setPoint2(!getCellValue(row, 15).isEmpty() ? Integer.parseInt(getCellValue(row, 15)) : 0);
+                student.setPoint3(!getCellValue(row, 16).isEmpty() ? Integer.parseInt(getCellValue(row, 16)) : 0);
+                student.setPoint4(!getCellValue(row, 17).isEmpty() ? Integer.parseInt(getCellValue(row, 17)) : 0);
+                student.setPoint5(!getCellValue(row, 18).isEmpty() ? Integer.parseInt(getCellValue(row, 18)) : 0);
                 student.setTotal_point5year(!getCellValue(row, 19,evaluator).isEmpty() ? Integer.parseInt(getCellValue(row, 19,evaluator)) : 0);
                 student.setPriority_point(!getCellValue(row, 20,evaluator).isEmpty() ? Integer.parseInt(getCellValue(row, 20,evaluator)) : 0);
                 student.setTotal_point(!getCellValue(row, 21,evaluator).isEmpty() ? Integer.parseInt(getCellValue(row, 21,evaluator)) : 0);
-                student.setNote(getCellValue(row, 22,evaluator));
+                student.setNote(getCellValue(row, 22));
                 students.add(student);
             }
         }
@@ -69,5 +69,10 @@ public class ImportExcel {
         DataFormatter formatter = new DataFormatter();
         Cell cell = row.getCell(cellNo);
         return formatter.formatCellValue(cell,evaluator);
+    }
+    private static String getCellValue(Row row, int cellNo) {
+        DataFormatter formatter = new DataFormatter();
+        Cell cell = row.getCell(cellNo);
+        return formatter.formatCellValue(cell);
     }
 }
