@@ -33,7 +33,7 @@ public class ImportExcel {
                 student.setId(Long.parseLong(getCellValue(row, 0,evaluator)));
                 student.setPrimary_school(getCellValue(row, 1));
                 student.setDistrict(getCellValue(row, 2));
-                student.setStudent_id(getCellValue(row, 3).replaceAll(" ", "").replaceAll("/n", ""));
+                student.setStudent_id(getCellValue(row, 3).replaceAll("\n", "").replaceAll("\\s\\s+", ""));
                 student.setClassroom(getCellValue(row, 4));
                 student.setName(getCellValue(row, 5));
 
